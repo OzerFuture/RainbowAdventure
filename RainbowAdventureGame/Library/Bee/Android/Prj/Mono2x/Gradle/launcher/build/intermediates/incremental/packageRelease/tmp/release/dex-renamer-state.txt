@@ -1,0 +1,4 @@
+#Tue Apr 30 19:31:50 EEST 2024
+base.0=D\:\\My Games\\Unity\\Tiger Rainbow\\Library\\Bee\\Android\\Prj\\Mono2x\\Gradle\\launcher\\build\\intermediates\\dex\\release\\mergeDexRelease\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
