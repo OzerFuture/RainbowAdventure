@@ -6047,7 +6047,7 @@ GameObject:
   - component: {fileID: 2112423966}
   - component: {fileID: 2112423965}
   m_Layer: 3
-  m_Name: Purple (1)
+  m_Name: Purple
   m_TagString: ColourCrystal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

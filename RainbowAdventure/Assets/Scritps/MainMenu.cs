@@ -49,4 +49,9 @@ public class MainMenu : MonoBehaviour
         OptionsUI.SetActive(notmenu);
         PlayUI.SetActive(notmenu);
     }
+
+    public void QuitApp()
+    {
+        Application.Quit();
+    }
 }
