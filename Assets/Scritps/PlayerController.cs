@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     private bool isTouching = false;
     private float touchDuration = 0.0f;
 
@@ -29,56 +28,64 @@ public class PlayerController : MonoBehaviour
     private float dis = 0.4f;
 
     public GameObject sphere;
+
     private void Start()
     {
         mainCamera = Camera.main;
         gameStarted = false;
         hitPoint = Vector3.zero;
-       
     }
-
 
 
     private void Update()
     {
-        if (Input.mousePosition.x >= 0 && Input.mousePosition.x <= Screen.width &&
-    Input.mousePosition.y >= 0 && Input.mousePosition.y <= Screen.height)
-        {
+        HandleInput();
+        ProcessMovement();
+    }
 
-            if (Input.touchCount > 0)
+    private void HandleInput()
+    {
+        // Check if the mouse is within the screen bounds
+        if (Input.mousePosition.x >= 0 && Input.mousePosition.x <= Screen.width &&
+            Input.mousePosition.y >= 0 && Input.mousePosition.y <= Screen.height)
+        {
+            // Start the game on any touch or mouse click
+            if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
             {
                 gameStarted = true;
-
             }
         }
+    }
+
+    private void ProcessMovement()
+    {
+        if (!gameStarted) return;
 
         RaycastHit hit;
         if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
         {
+            if (gameStarted == true)
+                MoveTowards(hit.point);
+        }
+    }
 
-                if (gameStarted == true)
-                {
-                Vector3 pos = new Vector3(hit.point.x, 5.767758f, hit.point.z);
-                Vector3 distancev = (pos - transform.position);
-                float distance = Vector3.Magnitude(distancev);
-                
-                transform.position = Vector3.MoveTowards(transform.position, pos, 1 * Time.deltaTime);
+    private void MoveTowards(Vector3 hitPoint)
+    {
+        Vector3 pos = new Vector3(hitPoint.x, 5.767758f, hitPoint.z);
+        Vector3 distancev = (pos - transform.position);
+        float distance = Vector3.Magnitude(distancev);
 
-                if (distance > 0.005f)
-                {
-                    transform.rotation = Quaternion.LookRotation(distancev + transform.forward, Vector3.up);
-                    gameObject.GetComponent<Animator>().SetBool("Move", true);
-                }
+        transform.position = Vector3.MoveTowards(transform.position, pos, 1 * Time.deltaTime);
 
-                if (distance < 0.005f)
-                {
-                    gameObject.GetComponent<Animator>().SetBool("Move", false);
-                }
-                
-            }
-         
+        if (distance > 0.005f)
+        {
+            transform.rotation = Quaternion.LookRotation(distancev + transform.forward, Vector3.up);
+            gameObject.GetComponent<Animator>().SetBool("Move", true);
         }
 
-        
+        if (distance < 0.005f)
+        {
+            gameObject.GetComponent<Animator>().SetBool("Move", false);
+        }
     }
 }
